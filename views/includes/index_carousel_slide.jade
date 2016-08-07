@@ -1,0 +1,35 @@
+// carousel slide
+.container
+	.row
+		.col-md-8
+			#myCarousel.carousel.slide(data-ride='carousel')
+				// Indicators
+				ol.carousel-indicators
+					li.active(data-target='#myCarousel', data-slide-to='0')
+					li(data-target='#myCarousel', data-slide-to='1')
+				// Wrapper for slides
+				.carousel-inner(role='listbox')
+					.item.active
+						img(src='http://placehold.it/800x400?text=IMAGE', alt='Image')
+						.carousel-caption
+							h3 Sell $
+							p Money Money.
+					.item
+						img(src='http://placehold.it/800x400?text=Another Image Maybe', alt='Image')
+						.carousel-caption
+							h3 More Sell $
+							p Lorem ipsum...
+				// Left and right controls
+				a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+					span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+					span.sr-only Previous
+				a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+					span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+					span.sr-only Next
+		.col-md-4
+			.well
+				p Some text..
+			.well
+				p Upcoming Events..
+			.well
+				p Visit Our Blog

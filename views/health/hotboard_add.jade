@@ -1,0 +1,47 @@
+doctype html
+html
+  // head_links
+  include ../includes/head.jade
+  // style
+  include ../includes/hotboard_style.jade
+  body
+    //navigation
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-center
+      .row.content
+        .col-sm-2.sidenav.txt-left
+          //side_nav
+          ul
+            each issue in rows
+              li
+                a(href='/health/hotboard/'+issue.id)= issue.title
+        .col-sm-8.text-left
+          //content-add form 구성
+          .container
+            .col-sm-8
+              h2 Add for Hotissue board
+              hr
+            form(role='form' action='/health/hotboard_add' method='post')
+              .col-sm-8
+                .form-group
+                  label(for='title') Title
+                  input#title.form-control(type='text' name='title' placeholder='Enter title')
+              .col-sm-8
+                .form-group
+                  label(for='author') Author
+                  input#author.form-control(type='text' name='author' placeholder='Enter author')
+              .col-sm-8
+                .form-grouop
+                  label(for='content') Content
+                  textarea#content.form-control(rows='10' name='content' placeholder='Enter content')
+                br
+                button.btn.btn-default(type='submit') Submit
+        .col-sm-2.sidenav
+          .well
+            p ADS
+          .well
+            p ADS
+    hr
+    //footer
+    include ../includes/footer.jade

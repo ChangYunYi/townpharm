@@ -1,0 +1,97 @@
+nav.navbar.navbar-inverse.navbar-fixed-top
+	.container
+		.navbar-header
+			button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+				span.sr-only Toggle navigation
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+			a.navbar-brand(href='/') TownPharm-acy
+		#navbar.collapse.navbar-collapse
+			ul.nav.navbar-nav
+				li.active
+					a(href='/') "Home"
+				// 건강이슈 드랍메뉴
+				li.dropdown
+					a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+						| 건강이슈
+						span.caret
+					ul.dropdown-menu
+						li
+							a(href='/health/hotboard') Hot Issue
+						li
+							a(href='#') 건강상식
+						li
+							a(href='#') 의약기구이야기
+						li.divider(role='separator')
+						li
+							a(href='#') 전문의약품
+						li
+							a(href='#') 일반의약품
+						li
+							a(href='#') 한방백방
+						li.divider(role='separator')
+						li.disabled
+							a(href='#') One more separated link
+				// 여행이야기 드랍메뉴
+				li.dropdown
+					a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+						| 여행이야기
+						span.caret
+					ul.dropdown-menu
+						li
+							a(href='#') 국내여행지
+						li
+							a(href='#') 해외여행지
+						li.divider(role='separator')
+						li
+							a(href='#') 해외사건사고
+						li.divider(role='separator')
+						li.disabled
+							a(href='#') One more separated link
+				// 생존영어 드랍메뉴
+				li.dropdown
+					a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+						| 생존영어
+						span.caret
+					ul.dropdown-menu
+						li
+							a(href='#') 일빵빵영어회화
+						li
+							a(href='#') 영어단어
+						li
+							a(href='#') 영어podcast
+						li.divider(role='separator')
+						li
+							a(href='#') Separated link
+						li.divider(role='separator')
+						li.disabled
+							a(href='#') One more separated link
+				// 초보코더 드랍메뉴
+				li.dropdown
+					a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+						| 초보코딩
+						span.caret
+					ul.dropdown-menu
+						li
+							a(href='#') HTML+CSS
+						li
+							a(href='#') javaScript+node.js
+						li
+							a(href='#') python
+						li
+							a(href='#') java
+						li.divider(role='separator')
+						li
+							a(href='#') ** API **
+						li.divider(role='separator')
+						li.disabled
+							a(href='#') One more separated link
+			ul.nav.navbar-nav.navbar-right
+				li
+					a(href='#')
+						span.glyphicon.glyphicon-log-in
+						|  Login
+		// /.nav-collapse

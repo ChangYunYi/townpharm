@@ -1,0 +1,45 @@
+doctype html
+html
+  // head_links
+  include ../includes/head.jade
+  // style
+  include ../includes/hotboard_style.jade
+  body
+    //navigation
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-center
+      .row.content
+        .col-sm-2.sidenav.text-left
+          // side_nav
+          ul
+            each issue in rows
+              li
+                a(href='/health/hotboard/'+issue.id)= issue.title
+        .col-sm-8.text-left
+          // content blog 본문 구성
+          if issues
+            h2= issues.title
+              hr
+            h6= issues.writetime
+              hr
+            = issues.content
+              hr
+            a.btn.btn-default(href='/health/hotboard/'+issues.id+'/delete', role='button') delete
+            a.btn.pull-right.btn-default(href='/health/hotboard/'+issues.id+'/edit', role='button') edit
+          else
+            h2= rows[0].title
+              hr
+            h6= rows[0].writetime
+              hr
+            = rows[0].content
+              hr
+            a.btn.pull-right.btn-default(href='/health/hotboard_add', role='button') add
+        .col-sm-2.sidenav
+          .well
+            p ADS
+          .well
+            p ADS
+      hr
+    //footer
+    include ../includes/footer.jade
