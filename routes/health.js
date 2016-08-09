@@ -42,7 +42,9 @@ module.exports = function(app){
   router.post('/hotboard_add', function(req, res){
     var title = req.body.title;
     var author = req.body.author;
-    var content = req.body.content;
+    // textarea에서 개행문자는 \r\n 이다 이는 html에서 인식이 안되므로
+    // 개행문자를 <br />로 치환해서 db에 저장해준다
+    var content = req.body.content.replace(/\r\n/gi, '<br/>');
     var sqlForAdd = 'INSERT INTO hotissue (title, author, content) VALUES(?, ?, ?)';
     //query 실행 --> hotissue에 title, author, content 정보를 등록한다
     client.query(sqlForAdd, [title, author, content], function(err, rows, fields){

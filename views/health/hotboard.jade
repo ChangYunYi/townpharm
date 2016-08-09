@@ -20,20 +20,23 @@ html
           // content blog 본문 구성
           if issues
             h2= issues.title
-              hr
+            hr
             h6= issues.writetime
-              hr
-            = issues.content
-              hr
+            hr
+            !{issues.content}
+            hr
             a.btn.btn-default(href='/health/hotboard/'+issues.id+'/delete', role='button') delete
-            a.btn.pull-right.btn-default(href='/health/hotboard/'+issues.id+'/edit', role='button') edit
+            a.btn.btn-default(href='/health/hotboard/'+issues.id+'/edit', role='button') edit
+            a.btn.pull-right.btn-default(href='/health/hotboard_add', role='button') add
           else
             h2= rows[0].title
-              hr
+            hr
             h6= rows[0].writetime
-              hr
-            = rows[0].content
-              hr
+            hr
+            !{rows[0].content}
+            hr
+            a.btn.btn-default(href='/health/hotboard/'+rows[0].id+'/delete', role='button') delete
+            a.btn.btn-default(href='/health/hotboard/'+rows[0].id+'/edit', role='button') edit
             a.btn.pull-right.btn-default(href='/health/hotboard_add', role='button') add
         .col-sm-2.sidenav
           .well

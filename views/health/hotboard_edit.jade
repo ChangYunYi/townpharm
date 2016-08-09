@@ -20,23 +20,23 @@ html
           //content-add form 구성
           .container
             .col-sm-8
-              h2 Add for Hotissue board
+              h2 Edit for Hotissue board
               hr
             form(role='form' action='/health/hotboard/'+editIssue.id+'/edit' method='post')
               .col-sm-8
                 .form-group
                   label(for='title') Title
-                  input#title.form-control(type='text' name='title' value=editIssue.title placeholder='Enter title')
+                  input#title.form-control(type='text' name='title' value=editIssue.title)
               .col-sm-8
                 .form-group
                   label(for='author') Author
-                  input#author.form-control(type='text' name='author' value=editIssue.author placeholder='Enter author')
+                  input#author.form-control(type='text' name='author' value=editIssue.author)
               .col-sm-8
                 .form-grouop
                   label(for='content') Content
-                  textarea#content.form-control(rows='10' name='content' placeholder='Enter content')= editIssue.content
+                  textarea#content.form-control(rows='10' name='content')= editIssue.content
                 br
-                button.btn.btn-default(type='submit') Upadate
+                button.btn.btn-default(type='submit') Update
         .col-sm-2.sidenav
           .well
             p ADS
