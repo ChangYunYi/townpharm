@@ -10,12 +10,18 @@ html
     //contents
     .container-fluid.text-center
       .row.content
+        // sidenav collapse type
         .col-sm-2.sidenav.text-left
-          // side_nav
-          ul
-            each issue in rows
-              li
-                a(href='/health/hotboard/'+issue.id)= issue.title
+          .panel-group
+            .panel.panel-default
+              .panel-heading
+                .panel-title
+                  a(data-toggle='collapse' href='#collapse1') 2016 Issues
+              #collapse1.panel-collapse.collapse.in
+                ul.list-group
+                  each issue in rows
+                    li.list-group-item
+                      a(href='/health/hotboard/'+issue.id)= issue.title
         .col-sm-8.text-left
           // content blog 본문 구성
           if issues
@@ -24,6 +30,8 @@ html
             h6= issues.writetime
             hr
             !{issues.content}
+            br
+            h6.text-right by !{issues.author}
             hr
             a.btn.btn-default(href='/health/hotboard/'+issues.id+'/delete', role='button') delete
             a.btn.btn-default(href='/health/hotboard/'+issues.id+'/edit', role='button') edit
@@ -34,6 +42,8 @@ html
             h6= rows[0].writetime
             hr
             !{rows[0].content}
+            br
+            h6.text-right by !{rows[0].author}
             hr
             a.btn.btn-default(href='/health/hotboard/'+rows[0].id+'/delete', role='button') delete
             a.btn.btn-default(href='/health/hotboard/'+rows[0].id+'/edit', role='button') edit
@@ -43,6 +53,7 @@ html
             p ADS
           .well
             p ADS
-      hr
     //footer
+    hr
+    br
     include ../includes/footer.jade

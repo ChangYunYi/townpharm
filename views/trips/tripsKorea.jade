@@ -1,0 +1,70 @@
+doctype html
+html
+  include ../includes/trips_head.jade
+  include ../includes/trips_style.jade
+  body
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluiD
+      .row.content
+        .col-sm-2.sidenav.text-left
+        // side-nav 일반 리스트 타입
+
+        .col-sm-9
+          // database - id, img(origin name), title, contents, timestamp,
+          //            password(글작성시 작성 - 수정, 삭제시 요구), author
+          // 첫 화면은 title + google maps + image(onclick slide ainmation)
+          h2 title
+          hr
+          h6 writetime
+          hr
+          // imgslides
+          w3-content(style='max-width:900px')
+            img.mySlides(src='http://placehold.it/300x100' style='width:100%')
+            img.mySlides(src='http://placehold.it/300x100' style='width:100%')
+            img.mySlides(src='http://placehold.it/300x100' style='width:100%')
+            // small indicator
+            .w3-row-padding.w3-section
+              .w3-col.s4
+                img.demo.w3-border.w3-hover-shadow(src='http://placehold.it/300x100' style='width:100%' onclick='currentDiv(1)')
+              .w3-col.s4
+                img.demo.w3-border.w3-hover-shadow(src='http://placehold.it/300x100' style='width:100%' onclick='currentDiv(2)')
+              .w3-col.s4
+                img.demo.w3-border.w3-hover-shadow(src='http://placehold.it/300x100' style='width:100%' onclick='currentDiv(3)')
+          hr
+          h6.pull-right by author
+
+        .col-sm-1.sidenav
+          // 여기다간 무엇을 넣을까나....그냥 빈공간으로???
+          div
+
+    script.
+      var slideIndex = 1;
+      showDivs(slideIndex);
+
+      function plusDivs(n) {
+        showDivs(slideIndex += n);
+      }
+
+      function currentDiv(n) {
+        showDivs(slideIndex =n);
+      }
+
+      function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName('mySlides');
+        var dots = document.getElementsByClassName('demo');
+        if (n > x.length) { slideIndex = 1; }
+        if (n < 1) { slideIndex = x.length; }
+        for (i=0; i < x.length; i++) {
+          x[i].style.display = 'none';
+        }
+        for (i=0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(' w3-border-red', '');
+        }
+        x[slideIndex-1].style.display = 'block';
+        dots[slideIndex-1].className += ' w3-border-red';
+      }
+
+  br
+  include ../includes/footer.jade

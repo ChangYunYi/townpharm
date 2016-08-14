@@ -11,11 +11,17 @@ html
     .container-fluid.text-center
       .row.content
         .col-sm-2.sidenav.text-left
-          // side_nav  health로부터 rows 데이터를 받는다
-          ul
-            each issue in rows
-              li
-                a(href='/health/hotboard/'+issue.id)= issue.title
+          .panel-group
+            .panel.panel-default
+              .panel-heading
+                .panel-title
+                  a(data-toggle='collapse' href='#collapse1') 2016 Issues
+              #collapse1.panel-collapse.collapse.in
+                ul.list-group
+                  each issue in rows
+                    li.list-group-item
+                      a(href='/health/hotboard/'+issue.id)= issue.title
+        
         .col-sm-8.text-left
           // content blog 본문 구성 두번째로 나오는 data를 받는다
           if delIssue
