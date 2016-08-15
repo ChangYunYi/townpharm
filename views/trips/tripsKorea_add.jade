@@ -1,7 +1,7 @@
 doctype html
 html
-  include ../includes/trips_head.jade
-  include ../includes/trips_style.jade
+  include ../includes/head.jade
+  include ../includes/main_style.jade
   body
     include ../includes/main_nav.jade
     //contents
@@ -16,24 +16,22 @@ html
             .col-sm-10
               h1 Add for Trips in Korea
               hr
-            form(role='form' action='/trips/tripsKorea_add' method='post')
+            form(action='/trips/tripsKorea_add' method='post' enctype='multipart/form-data')
               .col-sm-10
                 .form-group
-                  label(for='title') Title
                   input.w3-input(type='text' name='title' placeholder='Enter Title')
               .col-sm-10
                 .form-grouop
-                  label(for='content') Content
-                  textarea#content.form-control(rows='10' name='content' placeholder='html tag 사용가능')
+                  textarea.form-control(rows='10' name='content' placeholder='Enter Contents (html tag 사용가능)')
               .col-sm-5
                 .form-group
-                  label(for='author') Author
                   input.w3-input(type='text' name='author' placeholder='Enter author')
               .col-sm-5
                 .form-group
-                  label(for='password') PassWord
                   input.w3-input(type='password' name='password' placeholder='Enter password for edit, del')
-                br
+              .col-sm-10
+                .form-group
+                  input.w3-input(type='file' name='img' multiple)
                 button.btn.btn-default.pull-right(type='submit') Submit
     hr
     include ../includes/footer.jade

@@ -9,9 +9,8 @@ var bodyParser = require('body-parser');
 //router 적용위치
 var routes = require('./routes/index');
 var users = require('./routes/users');
-// new hotboard router : routes안의 export된 health.js 를 추출한다
 var health = require('./routes/health')(app);   // health
-var trips = require('./routes/trips');    //trips
+var trips = require('./routes/trips')(app);    //trips
 
 var app = express();
 //jade파일로부터 소스보기시 줄바꿈을 실행해서 가독성을 높여준다
@@ -28,13 +27,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //static service setting
 app.use(express.static(path.join(__dirname, 'public')));
-// routes 에 관련 router가 있음
+// router setting
 app.use('/', routes);
 app.use('/users', users);
-// /health로 시작하는 url을 health로 라우트한다
-app.use('/health', health);
-// '/trips/'인 url router
-app.use('/trips', trips);
+app.use('/health', health);   // /health로 시작하는 url을 health로 라우트한다
+app.use('/trips', trips);   // '/trips/'인 url router
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

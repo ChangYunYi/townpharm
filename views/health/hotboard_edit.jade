@@ -3,7 +3,7 @@ html
   // head_links
   include ../includes/head.jade
   // style
-  include ../includes/hotboard_style.jade
+  include ../includes/main_style.jade
   body
     //navigation
     include ../includes/main_nav.jade
@@ -21,7 +21,7 @@ html
                   each issue in rows
                     li.list-group-item
                       a(href='/health/hotboard/'+issue.id)= issue.title
-          
+
         .col-sm-8.text-left
           //content-add form 구성
           .container

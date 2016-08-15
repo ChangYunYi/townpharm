@@ -1,0 +1,50 @@
+style.
+	body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+	/* Set height of the grid so .sidenav can be 120% (adjust as needed) */
+	ul { list-style : none; }
+	/* list-group-item resize */
+	.list-group-item {
+		padding-top: 3px;
+		padding-bottom: 3px;
+		padding-left: 25px;
+	}
+	.row.content {height: 420px}
+	/* Set gray background color and 120% height */
+	.sidenav {
+		padding-top: 20px;
+		background-color: #f1f1f1;
+		height: 120%;
+	}
+	/* On small screens, set height to 'auto' for sidenav and grid */
+	@media screen and (max-width: 767px) {
+		.sidenav {
+			height: auto;
+			padding: 15px;
+		}
+		.row.content {height:auto;}
+	}
+	/* carousal */
+	.carousel-inner img {
+		width: 100%; /* Set width to 100% */
+		min-height: 200px;
+	}
+	/* Hide the carousel text when the screen is less than 600 pixels wide */
+	@media (max-width: 600px) {
+		.carousel-caption {
+		display: none;
+	}
+	/* img slides */
+	.mySlides {
+		display:none;
+	}
+
+	/* google maps */
+	#googleMap {
+		width: 100%;
+		height: 400px;
+		-webkit-filter: grayscale(90%);
+		filter: grayscale(90%);
+	}
+	footer {
+		padding: 25px;
+	}

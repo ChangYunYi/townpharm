@@ -1,17 +1,14 @@
 doctype html
 html
-  // head_links
   include ../includes/head.jade
-  // style
-  include ../includes/hotboard_style.jade
+  include ../includes/main_style.jade
   body
-    //navigation
     include ../includes/main_nav.jade
     //contents
-    .container-fluid.text-center
+    .container-fluid.text-left
       .row.content
         // sidenav collapse type
-        .col-sm-2.sidenav.text-left
+        .col-sm-2.sidenav
           .panel-group
             .panel.panel-default
               .panel-heading
@@ -22,7 +19,7 @@ html
                   each issue in rows
                     li.list-group-item
                       a(href='/health/hotboard/'+issue.id)= issue.title
-        .col-sm-8.text-left
+        .col-sm-8
           // content blog 본문 구성
           if issues
             h2= issues.title
