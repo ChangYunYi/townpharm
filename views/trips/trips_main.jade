@@ -1,0 +1,44 @@
+doctype html
+html
+  include ../includes/head.jade
+  include ../includes/main_style.jade
+  style.
+    .carousel-inner { height : 300px; }
+    .carousel-caption { top: 230px; right:-300px; bottom: auto; }
+  body
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          include trips_sidenav.jade
+
+        .col-sm-8
+          // thumbnail type gallery 200x100 * 3cols * 2 rows
+          h4 Trips
+          hr
+          img.w3-border.w3-padding.w3-padding-tiny.w3-hover-opacity(src='/images/'+trips[0].img1 style='width:230px; height:150px')
+          img.w3-border.w3-padding.w3-padding-tiny.w3-hover-opacity(src='/images/'+trips[0].img2 style='width:230px; height:150px')
+          img.w3-border.w3-padding.w3-padding-tiny.w3-hover-opacity(src='/images/'+trips[0].img3 style='width:230px; height:150px')
+          hr
+          table.table.table-hover.table-condensed
+            thead
+              tr
+                th #
+                th Title
+                th Author
+                th Date
+            tbody
+              each trip in trips
+                tr
+                  td= trip.id
+                  td
+                    a(href='/trips/'+trip.category+'/'+trip.id)= trip.title
+                  td= trip.author
+                  td= trip.createdate
+          a.btn.btn-default.pull-right(href='/trips/'+trips[0].category+'/'+trips[0].id+'/add', role='button') ADD
+
+        .col-sm-2.sidenav
+
+    //br
+    include ../includes/footer.jade

@@ -1,0 +1,46 @@
+doctype html
+html
+  // head_links
+  include ../includes/head.jade
+  // style
+  include ../includes/main_style.jade
+  body
+    //navigation
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          include health_sidenav.jade
+
+        .col-sm-8
+          //content-add form 구성
+          .container
+            .col-sm-8
+              h4 Add for Health board
+              hr
+            form(role='form' action='/health/'+addissue.category+'/'+addissue.id+'/add' method='post')
+              .col-sm-8
+                .form-group
+                  select.w3-select.w3-select-dfault(name='category')
+                    option(value='' selected, disabled) Choose board
+                    option(value='hotboard') Hot issue
+                    option(value='common') 건강상식
+                    option(value='eqip') 의약기구
+                    option(value='etc') 전문의약품
+                    option(value='otc') 일반의약품
+                    option(value='oriental') 한방백방
+                .form-group
+                  input.w3-input(type='text' name='title' placeholder='Enter Title')
+                .form-group
+                  input.w3-input(type='text' name='author' placeholder='Enter Author')
+                .form-group
+                  textarea#content.form-control(rows='10' name='content' placeholder='html tag 사용가능')
+                .form-group
+                  input.w3-input(type='password' name='password' placeholder='Enter password for edit, del')
+                br
+                button.btn.btn-default(type='submit') Submit
+        .col-sm-2.sidenav
+    hr
+    //footer
+    include ../includes/footer.jade

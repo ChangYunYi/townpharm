@@ -1,0 +1,33 @@
+doctype html
+html
+  include ../includes/head.jade
+  include ../includes/main_style.jade
+  body
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        // sidenav collapse type
+        .col-sm-2.sidenav
+          include health_sidenav.jade
+        .col-sm-8
+          // drug image
+          // content blog 본문 구성
+          h4= issue.title
+          hr
+          h6= issue.writetime
+          hr
+          !{issue.content}
+          br
+          h6.text-right by !{issue.author}
+          hr
+          a.btn.btn-default(href='/health/'+issue.category+'/'+issue.id+'/delete', role='button') delete
+          a.btn.btn-default(href='/health/'+issue.category+'/'+issue.id+'/editcheck', role='button') edit
+          a.btn.pull-right.btn-default(href='/health/'+issue.category+'/'+issue.id+'/add', role='button') ADD
+
+        .col-sm-2.sidenav
+
+    //footer
+    hr
+    br
+    include ../includes/footer.jade

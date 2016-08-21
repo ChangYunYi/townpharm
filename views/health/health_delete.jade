@@ -1,0 +1,38 @@
+doctype html
+html
+  // head_links
+  include ../includes/head.jade
+  // style
+  include ../includes/main_style.jade
+  body
+    //navigation
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          include health_sidenav.jade
+
+        .col-sm-8
+          // content blog 본문 구성 두번째로 나오는 data를 받는다
+          .container
+            .col-sm-8
+              h2= delIssue.title
+              hr
+              h6= delIssue.writetime
+              hr
+              h4 정말 이 글을 삭제 하시겠습니까?
+              hr
+              form(action='/health/'+delIssue.category+'/'+delIssue.id+'/delete' method='post')
+                .col-sm-3
+                  .form-group
+                    input.w3-input(type='text' name='id' value= delIssue.id)
+                .col-sm-9
+                  .form-group
+                    input.w3-input(type='password' name='password' placeholder='Enter password for edit, del')
+                    br
+                    button.btn.btn-default.pull-right(type='submit') Delete
+        .col-sm-2.sidenav
+    hr
+    //footer
+    include ../includes/footer.jade

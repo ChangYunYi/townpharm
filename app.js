@@ -11,6 +11,8 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var health = require('./routes/health')(app);   // health
 var trips = require('./routes/trips')(app);    //trips
+var english = require('./routes/english');    // elglish
+var coding = require('./routes/coding');      // coding router import
 
 var app = express();
 //jade파일로부터 소스보기시 줄바꿈을 실행해서 가독성을 높여준다
@@ -32,7 +34,8 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/health', health);   // /health로 시작하는 url을 health로 라우트한다
 app.use('/trips', trips);   // '/trips/'인 url router
-
+app.use('/english', english); // '/english/..' rul router setting
+app.use('/coding', coding);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

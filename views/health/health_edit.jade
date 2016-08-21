@@ -1,0 +1,61 @@
+doctype html
+html
+  // head_links
+  include ../includes/head.jade
+  // style
+  include ../includes/main_style.jade
+  body
+    //navigation
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          //.panel-group
+          //  .panel.panel-default
+          //    .panel-heading
+          //      .panel-title
+          //        a(data-toggle='collapse' href='#collapse1') 2016 Issues
+          //    #collapse1.panel-collapse.collapse.in
+          //      ul.list-group
+          //        each issue in rows
+          //          li.list-group-item
+          //            a(href='/health/hotboard/'+issue.id)= issue.title
+          include health_sidenav.jade
+
+        .col-sm-8
+          //content-add form 구성
+          .container
+            .col-sm-8
+              h2 Edit for Health board
+              hr
+              form(role='form' action='/health/'+editIssue.category+'/'+editIssue.id+'/edit' method='post')
+                .col-sm-3
+                  .form-group
+                    input.w3-input(type='text' name='id' value= editIssue.id)
+                .col-sm-9
+                  .form-group
+                    select.w3-select.w3-select-dfault(name='category')
+                      option(value='' selected, disabled) Choose board
+                      option(value='hotboard') Hot issue
+                      option(value='common') 건강상식
+                      option(value='eqip') 의약기구
+                      option(value='etc') 전문의약품
+                      option(value='otc') 일반의약품
+                      option(value='oriental') 한방백방
+                .form-group
+                  label(for='title') Title
+                  input.w3-input(type='text' name='title' value = editIssue.title)
+                .form-group
+                  label(for='author') Author
+                  input.w3-input(type='text' name='author' value = editIssue.author)
+                .form-grouop
+                  textarea#content.form-control(rows='10' name='content')= editIssue.content
+                .form-group
+                  input.w3-input(type='password' name='password' placeholder='Enter password for edit, del')
+                br
+                button.btn.btn-default(type='submit') Update
+        .col-sm-2.sidenav
+    hr
+    //footer
+    include ../includes/footer.jade

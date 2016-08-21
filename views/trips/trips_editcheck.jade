@@ -1,0 +1,32 @@
+doctype html
+html
+  include ../includes/head.jade
+  include ../includes/main_style.jade
+  body
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          include trips_sidenav.jade
+
+        .col-sm-8
+          .container
+            .col-sm-8
+              h3= row.title
+              hr
+              h5 정말 이 글을 수정하시겠습니까?
+              hr
+              h5 Confirm author
+              hr
+              form(action='/trips/'+row.category+'/'+row.id+'/edit_confirm' method='post')
+                .col-sm-3
+                  .form-group
+                    input.w3-input(type='text' name='id' value= row.id)
+                .col-sm-9
+                  .form-group
+                    input.w3-input(type='password' name='password' placeholder='Enter password for edit, del')
+                  button.btn.btn-default.pull-right(type='submit') Submit
+        .col-sm-2.sidenav
+    hr
+    include ../includes/footer.jade

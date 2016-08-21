@@ -1,0 +1,45 @@
+doctype html
+html
+	include ../includes/head.jade
+	include ../includes/main_style.jade
+	body
+		include ../includes/main_nav.jade
+		//contents
+		.container-fluid.text-left
+			.row.content
+				.col-sm-2.sidenav
+					// side-nav 일반 리스트 타입
+					p
+						a(href='/english/english100') 100영어회화
+					p
+						a(href='#') Eng Words
+					p
+						a(href='#') Pre...ESL
+					|-------------------------
+					p
+						a(href='#') Eng Basic
+				.col-sm-8
+					// jumbotron
+					.jumbotron
+						h2 English Conversation Section
+						| Here's the board for studying Podcast '100 English Conversation'.<br/>
+						| You can listen free english lectures after serching '100' or 'ilbangbang' in Apple Podcast.
+					// english main page board
+					table.table.table-hover.table-condensed
+						thead
+							tr
+								th #
+								th Title
+								th Author
+								th Date
+						//tbody
+						//  each trip in rows
+						//    tr
+						//      td= trip.id
+						//      td
+						//        a(href='/trips/tripsKorea/'+trip.id)= trip.title
+						//      td= trip.author
+						//      td= trip.createdate
+				.col-sm-2.sidenav
+		//br
+		include ../includes/footer.jade

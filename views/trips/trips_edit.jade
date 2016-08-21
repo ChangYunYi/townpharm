@@ -1,0 +1,43 @@
+doctype html
+html
+  include ../includes/head.jade
+  include ../includes/main_style.jade
+  body
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          include trips_sidenav.jade
+
+        .col-sm-8
+          .container
+            .col-sm-8
+              h2 Edit for Trips
+              hr
+              form(action='/trips/'+row.category+'/'+row.id+'/edit' method='post')
+                .col-sm-6
+                  .form-group
+                    input.w3-input(type='text' name='title' value= row.title)
+                .col-sm-6
+                  .form-group
+                    select.w3-select.w3-select-default(name='category')
+                      option(value='' selected, disabled) Choose Board
+                      option(value='korea') trips in korea
+                      option(value='abroad') trips abroad
+                      option(value='news') 해외여행 News
+                .form-grouop
+                  textarea.form-control(rows='10' name='content')= row.content
+                .col-sm-4
+                  .form-group
+                    input.w3-input(type='text' name='id' value= row.id)
+                .col-sm-4
+                  .form-group
+                    input.w3-input(type='text' name='author' value= row.author)
+                .col-sm-4
+                  .form-group
+                    input.w3-input(type='password' name='password' placeholder='re-Fill out password for edit, del')
+                  button.btn.btn-default.pull-right(type='submit') Submit
+        .col-sm-2.sidenav
+    hr
+    include ../includes/footer.jade

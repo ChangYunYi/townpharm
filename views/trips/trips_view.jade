@@ -1,0 +1,58 @@
+doctype html
+html
+  include ../includes/head.jade
+  include ../includes/main_style.jade
+  style.
+    .carousel-inner { height : 300px; }
+    .carousel-caption { top: 230px; right:-300px; bottom: auto; }
+  body
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          include trips_sidenav.jade
+
+        .col-sm-8
+          // database - id, img(origin name), title, contents, timestamp,
+          //            password(글작성시 작성 - 수정, 삭제시 요구), author
+          // 첫 화면은 title + google maps + image(onclick slide ainmation)
+          // imgslides
+          #myCarousel.carousel.slide(data-ride='carousel')
+            // Indicators
+            ol.carousel-indicators
+              li.active(data-target='#myCarousel', data-slide-to='0')
+              li(data-target='#myCarousel', data-slide-to='1')
+              li(data-target='#myCarousel', data-slide-to='2')
+            // Wrapper for slides
+            .carousel-inner(role='listbox')
+              .item.active
+                img(src='/images/'+trip.img1 style='height:300px')
+                .carousel-caption
+                  h6= trip.img1
+              .item
+                img(src='/images/'+trip.img2 style='height:300px')
+                .carousel-caption
+                  h6= trip.img2
+              .item
+                img(src='/images/'+trip.img3 style='height:300px')
+                .carousel-caption
+                  h6= trip.img3
+            // Left and right controls
+            a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+              span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+              span.sr-only Previous
+            a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+              span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+              span.sr-only Next
+          hr
+          !{trip.content}
+          h6.pull-right by !{trip.author} at !{trip.createdate}
+          hr
+          a.btn.btn-default(href='/trips/'+trip.category+'/'+trip.id+'/delete', role='button') Delete
+          a.btn.btn-default(href='/trips/'+trip.categroy+'/'+trip.id+'/edit_check', role='button') Edit
+          a.btn.pull-right.btn-default(href='/trips/tripsKorea_add', role='button') Trip Add
+        .col-sm-2.sidenav
+
+    //br
+    include ../includes/footer.jade

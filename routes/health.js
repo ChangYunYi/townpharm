@@ -12,104 +12,119 @@ module.exports = function(app){
     database: 'yicy'
   });
   client.connect(); // 데이터베이스에 접속 명령
-
   /* router setting */
-  // '[/health, /health/hotboard]' : hotboard.jade -> get
-  router.get(['/', '/hotboard', '/hotboard/:id'], function(req, res){	///health 생략가능
-    // '/hotboard'로부터 side_nav list 보여주기 위해 (id 값이 없이 들어왔을때 최신 글을 보여준다)
-    var sql = 'SELECT * FROM hotissue ORDER BY id DESC';  //목록을 최신순으로 보여주기 위해 역순으로 배열
-    client.query(sql, function(err, rows, fields){	//data는 rows에 담겨있음
-      // '/hotboard/:id'로 들어왔을때 id 값에 맞는 글을 보여주기위해서
-      var id = req.params.id;   //url로 들어온 id값을 확보
-      if(id){   //id 값이 있으면 실행
-        var _sql = 'SELECT * FROM hotissue WHERE id=?';   //id 값에 관련된 데이터 하나의 정보 모두를 선택
-        client.query(_sql, [id], function(err, issues, fields){
-          res.render('health/hotboard', {rows : rows, issues : issues[0]});    //정보 객체중 하나만 선택해서 보내준다
-        });
-      }else { //id 값이 없으면 실행
-        res.render('health/hotboard', {rows : rows});    //rows 는 데이터정보 객체다
-      }
+  // routing '/health/:category' main page for each category
+  router.get('/:category', function(req, res){
+    // category별로 분기해서 최근 5개의 새글을 보여준다
+    var category = req.params.category;
+    var sql = 'SELECT id, title, author, content, date_format(writetime,"%Y-%m-%d") writetime, category FROM health WHERE category= ? ORDER BY id DESC LIMIT 5';  //목록을 최신순으로 보여주기 위해 역순으로 배열
+    client.query(sql, [category], function(err, rows, fields){
+      // rows는 table 의 각각의 데이터의 객체들의 묶음단위...
+      res.render('health/health_main', {issues: rows});
     });  //end query
   }); // end router.get()
-
-  // 'hotboard/add' router
-  router.get('/hotboard_add', function(req, res){
-    var sqlForAddView = 'SELECT * FROM hotissue ORDER BY id DESC';
-    client.query(sqlForAddView, function(err, rows, fields){
-      res.render('health/hotboard_add', {rows : rows});
+  // main board 클릭시 개별 id에 관한 내용 보여주기
+  router.get('/:category/:id', function(req, res){
+    // category를 따로 뺄 필요는 없다... id는 모든 글이 다 다르다..
+    var id = req.params.id;
+    var sqlforView = 'SELECT id, title, author, content, date_format(writetime,"%Y-%m-%d") writetime, category FROM health WHERE id=?';
+    client.query(sqlforView, [id], function(err, rows){
+      res.render('health/health_view', {issue: rows[0]});
     });
   });
-  router.post('/hotboard_add', function(req, res){
+  // '/:category/health_add'를 하면 개별 view 롤 routing 되므로 이를 구별하기 위해 세부분으로 구분함
+  router.get('/:category/:id/add', function(req, res){
+    // anchor내의 주소를 만들기 위해서 id별 data를 추출할 필요가 있음
+    var id = req.params.id;
+    var sqlforAddView = 'SELECT id, title, author, content, date_format(writetime,"%Y-%m-%d") writetime, category FROM health WHERE id=?';
+    client.query(sqlforAddView, [id], function(err, rows){
+      res.render('health/health_add', {addissue: rows[0]});
+    });
+  });
+  router.post('/:category/:id/add', function(req, res){
+    // post로 들어온 정보는 .body.property롤 parsing 할수 있다.
     var title = req.body.title;
     var author = req.body.author;
+    var category = req.body.category;
+    var password = req.body.password;
     // textarea에서 개행문자는 \r\n 이다 이는 html에서 인식이 안되므로
     // 개행문자를 <br />로 치환해서 db에 저장해준다
     var content = req.body.content.replace(/\r\n/gi, '<br/>');
-    var sqlForAdd = 'INSERT INTO hotissue (title, author, content) VALUES(?, ?, ?)';
+    var sqlForAdd = 'INSERT INTO health (title, author, category, password, content) VALUES(?, ?, ?, ?, ?)';
     //query 실행 --> hotissue에 title, author, content 정보를 등록한다
-    client.query(sqlForAdd, [title, author, content], function(err, rows, fields){
-      res.redirect('/health/hotboard');  // '/hotboard'로 라우터를 보내주자
+    client.query(sqlForAdd, [title, author, category, password, content], function(err, rows, fields){
+      // main view로 redirecting
+      res.redirect('/health/'+category);
     });
   });
-
   // 'hotboard/:id/edit' router
-  router.get('/hotboard/:id/edit', function(req, res){
-    var sql = 'SELECT * FROM hotissue ORDER BY id DESC';
-    client.query(sql, function(err, rows, fields){
-      var id = req.params.id;
-      if(id){
-        var sqlForEditView = 'SELECT * FROM hotissue WHERE id=?';
-        client.query(sqlForEditView, [id], function(err, editIssues, fields){
-          res.render('health/hotboard_edit', { rows : rows, editIssue : editIssues[0] });
-        });
-      }else{  //id가 없으면 error임.....
-        console.log('Not Found Id for Edit : '+err);
-      }
+  router.get('/:category/:id/editcheck', function(req, res){
+    // edit은 반드시 개별 글을 추출해야 한다..
+    var id = req.params.id;
+    if(id){
+      var sqlForEditView = 'SELECT id, title, author, category, password, content, date_format(writetime,"%Y-%m-%d") writetime FROM health WHERE id=?';
+      client.query(sqlForEditView, [id], function(err, rows, fields){
+        res.render('health/health_editcheck', { editIssue : rows[0] });
+      });
+    }else{  //id가 없으면 error임.....
+      console.log('Not Found Id for Edit : '+err);
+    }
+  });
+  router.post('/:category/:id/editconfirm', function(req, res){
+    var id = req.body.id;
+    var password = req.body.password;
+    var sqlforEditconfirm = 'SELECT id, title, author, category, password, content, date_format(writetime,"%Y-%m-%d") writetime FROM health WHERE id=?';
+    client.query(sqlforEditconfirm, [id], function(err, rows){
+      if(password == rows[0].password) res.render('health/health_edit', {editIssue: rows[0]});
+      else res.render('health/health_editcheck', {editIssue: rows[0]});
     });
   });
   // hotboard_edit 에서 정보를 받아오면
-  router.post('/hotboard/:id/edit', function(req, res){
+  router.post('/:category/:id/edit', function(req, res){
     // request 에서 정보를 파싱한다
     var title = req.body.title;
     var author = req.body.author;
+    var category = req.body.category;
+    var password = req.body.password;
     var content = req.body.content;
     var id = req.params.id;
-    var sqlForEdit = 'UPDATE hotissue SET title=?, author=?, content=? WHERE id=?';
-    client.query(sqlForEdit, [title, author, content, id], function(err, rows, fields){
-        res.redirect('/health/hotboard');
+    var sqlForEdit = 'UPDATE health SET title=?, author=?, category=?, password=?, content=? WHERE id=?';
+    client.query(sqlForEdit, [title, author, category, password, content, id], function(err, rows, fields){
+      res.redirect('/health/'+category);
     });
   });
-
   // 'hotboard/:id/delete' 글삭제기능 router
-  router.get('/hotboard/:id/delete', function(req, res){
-    // 글목록편의 리스트를 계속 유지해주기 위해 전체값을 보내줄 필요가 있음 그래서 계속 이 값이 필요하다
-    var sql = 'SELECT * FROM hotissue ORDER BY id DESC';
-    client.query(sql, function(err, rows, fields){
+  router.get('/:category/:id/delete', function(req, res){
       var id = req.params.id;
       if(id){
         // 정말 삭제할것인 확인차 보여주는 view page임
-        var sqlForDelAlert = 'SELECT * FROM hotissue WHERE id=?';
+        var sqlForDelAlert = 'SELECT id, title, author, content, date_format(writetime,"%Y-%m-%d") writetime, category FROM health WHERE id=?';
         client.query(sqlForDelAlert, [id], function(err, delIssue, fields){
-          res.render('health/hotboard_delete', { rows : rows, delIssue : delIssue[0] });
+          res.render('health/health_delete', { delIssue : delIssue[0] });
         });
       }else{
         console.log('Not Found Id for Delete'+err);
       }
     });
+  router.post('/:category/:id/delete', function(req, res){
+    var id = req.body.id;
+    var sqlforDelcheck = 'SELECT category, password FROM health WHERE id=?';
+    client.query(sqlforDelcheck, [id], function(err, rows){
+      if(req.body.password == rows[0].password) {
+        var sqlForDel = 'DELETE FROM health WHERE id=?';
+        client.query(sqlForDel, [id], function(err, issues, fielsds){
+          res.redirect('/health/'+rows[0].category);
+        });
+      } else {
+        var sqlForDelAlert = 'SELECT id, title, author, content, date_format(writetime,"%Y-%m-%d") writetime, category FROM health WHERE id=?';
+        client.query(sqlForDelAlert, [id], function(err, delIssue, fields){
+          res.render('health/health_delete', { delIssue : delIssue[0] });
+        });    //end query
+      } // end if-else
+    });
   });
-  // 삭제확인 페이지에서 확인을 누르면 실행되는 js
-  router.post('/hotboard/:id/delete', function(req, res){
-    var id = req.params.id;
-    if(id){
-      // 데이터 삭제 query
-      var sqlForDel = 'DELETE FROM hotissue WHERE id=?';
-      client.query(sqlForDel, [id], function(err, issues, fielsds){
-        res.redirect('/health/hotboard');
-      });
-    }else {
-      console.log(err);
-    }
-  });
+
+
 
   return router;    // module에 function()을 하려면 router 를 반환해줘야 한다
 };

@@ -1,5 +1,8 @@
 style.
-	body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+	body,h1,h2,h3,h4,h5,h6 {
+		font-family: "Lato", sans-serif;
+	}
+	body { font-size: 14px;}
 	/* Set height of the grid so .sidenav can be 120% (adjust as needed) */
 	ul { list-style : none; }
 	/* list-group-item resize */
@@ -33,11 +36,11 @@ style.
 		.carousel-caption {
 		display: none;
 	}
-	/* img slides */
-	.mySlides {
-		display:none;
+	.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+		width: auto;
+		height: 300px;
+		margin: auto;
 	}
-
 	/* google maps */
 	#googleMap {
 		width: 100%;
