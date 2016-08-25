@@ -43,6 +43,7 @@ module.exports = function(app){
   });
   router.post('/:category/:id/add', function(req, res){
     // post로 들어온 정보는 .body.property롤 parsing 할수 있다.
+    // add post로 받을시 body 내 정보값에 null 값이 있으면 정보를 재 입력하도록 하자.... edit도 마찬가지
     var title = req.body.title;
     var author = req.body.author;
     var category = req.body.category;
@@ -108,11 +109,12 @@ module.exports = function(app){
     });
   router.post('/:category/:id/delete', function(req, res){
     var id = req.body.id;
-    var sqlforDelcheck = 'SELECT category, password FROM health WHERE id=?';
+    var password = req.body.password;
+    var sqlforDelcheck = 'SELECT id, title, author, content, date_format(writetime,"%Y-%m-%d") writetime, category, password FROM health WHERE id=?';
     client.query(sqlforDelcheck, [id], function(err, rows){
-      if(req.body.password == rows[0].password) {
+      if(password == rows[0].password) {
         var sqlForDel = 'DELETE FROM health WHERE id=?';
-        client.query(sqlForDel, [id], function(err, issues, fielsds){
+        client.query(sqlForDel, [id], function(err, issues, fields){
           res.redirect('/health/'+rows[0].category);
         });
       } else {

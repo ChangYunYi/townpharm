@@ -1,0 +1,30 @@
+doctype html
+html
+	include ../includes/head.jade
+	include ../includes/main_style.jade
+	body
+		include ../includes/main_nav.jade
+		.container-fluid.text-left
+			.row.content
+				.col-sm-2.sidenav
+					include eng_sidenav.jade
+				.col-sm-8
+					.container
+						.col-sm-8
+							h3= delcheck.title
+							hr
+							h4 confirm Delete
+							| 정말 이 글을 삭제 하시겠습니까?
+							hr
+							form(action='/english/'+delcheck.category+'/'+delcheck.id+'/delete' method='post')
+								.col-sm-3
+									.form-group
+										input.w3-input(type='text' name='id' value= delcheck.id)
+								.col-sm-9
+									.form-group
+										input.w3-input(type='password' name='password' placeholder='Enter password for delete')
+										br
+										button.btn.btn-default.pull-right(type='submit') Delete
+				.col-sm-2.sidenav
+		hr
+		include ../includes/footer.jade

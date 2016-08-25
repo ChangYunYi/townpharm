@@ -1,0 +1,24 @@
+doctype html
+html
+  include ../includes/head.jade
+  include ../includes/main_style.jade
+  body
+    include ../includes/main_nav.jade
+    //contents
+    .container-fluid.text-left
+      .row.content
+        .col-sm-2.sidenav
+          include eng_sidenav.jade
+
+        .col-sm-8
+          h4= view.title
+          hr
+          !{view.content}
+          h6.pull-right by !{view.author} at !{view.credate}
+          hr
+          a.btn.btn-default(href='/english/'+view.category+'/'+view.id+'/delcheck', role='button') Delete
+          a.btn.btn-default(href='/english/'+view.category+'/'+view.id+'/editcheck', role='button') Edit
+          a.btn.pull-right.btn-default(href='/english/'+view.category+'/'+view.id+'eng_add', role='button') Add
+        .col-sm-2.sidenav
+    //br
+    include ../includes/footer.jade

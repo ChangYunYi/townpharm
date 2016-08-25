@@ -1,0 +1,40 @@
+doctype html
+html
+	include ../includes/head.jade
+	include ../includes/main_style.jade
+	body
+		include ../includes/main_nav.jade
+		.container-fluid.text-left
+			.row.content
+				.col-sm-2.sidenav
+					include eng_sidenav.jade
+				.col-sm-8
+					h4 Edit for English board
+					hr
+					form(action='/english/'+editform.category+'/'+editform.id+'/edit' method='post')
+						.col-sm-3
+							.form-group
+								input.w3-input(type='text' name='id' value= editform.id)
+						.col-sm-9
+							.form-group
+								select.w3-select.w3-select-default(name='category')
+									option(value='' selected, disabled) Choose board
+									option(value='eng100') 100영어회화
+									option(value='eng_word') 100영단어 A-Z
+									option(value='eng_basic') 100기초영어
+									option(value='eng_esl') English Second Lang.
+						.col-sm-8
+							.form-group
+								label(for='title') Title
+								input.w3-input(type='text' name='title' value= editform.title)
+						.col-sm-4
+								label(for='author') Author
+								input.w3-input(type='text' name='author' value= editform.author)
+						.form-group
+							textarea.form-control(rows='10' name='content')= editform.content
+							input.w3-input(type='password' name='password' value= editform.password)
+						br
+						button.btn.btn-default.pull-right(type='submit') Submit
+				.col-sm-2.sidenav
+	br
+	include ../includes/footer.jade

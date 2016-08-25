@@ -115,11 +115,10 @@ module.exports = function(app){
       res.redirect('/trips/'+category);
     });
   });
-
-
+/* get & post delete*/
   router.get('/:category/:id/delete', function(req, res){
     var id = req.params.id;
-    var sqlforDelcheck = 'SELECT id, category, title FROM trips WHERE id=?';
+    var sqlforDelcheck = 'SELECT id, title, category, content, author, img1, img2, img3, date_format(createdate,"%Y-%m-%d") createdate, password FROM trips WHERE id=?';
     client.query(sqlforDelcheck, [id], function(err, row){
       res.render('trips/trips_delcheck', {delTrip: row[0]});
     });
@@ -127,9 +126,10 @@ module.exports = function(app){
   router.post('/:category/:id/delete', function(req, res){
     var id = req.body.id;
     var password = req.body.password;
-    var sqlforDel = 'SELECT password, category FROM trips WHERE id=?';
+    var sqlforDel = 'SELECT id, title, category, content, author, img1, img2, img3, date_format(createdate,"%Y-%m-%d") createdate, password FROM trips WHERE id=?';
     client.query(sqlforDel, [id], function(err, row){
-      res.redirect('/trips/'+ row[0].category);
+      if(password == row[0].password) res.redirect('/trips/'+ row[0].category);
+      else res.render('trips/trips_delcheck', { delTrip: row[0]});  
     });
   });
 

@@ -1,0 +1,29 @@
+doctype html
+html
+	include ../includes/head.jade
+	include ../includes/main_style.jade
+	body
+		include ../includes/main_nav.jade
+		//contents
+		.container-fluid.text-left
+			.row.content
+				.col-sm-2.sidenav
+					include eng_sidenav.jade
+				.col-sm-8
+					h4= editcheck.title
+					hr
+					h5 정말 이 글을 수정 하시겠습니까?
+					hr
+					h5 Confirm author
+					hr
+					form(action='/english/'+editcheck.category+'/'+editcheck.id+'/editcheck' method='post')
+						.col-sm-3
+							.form-group
+								input.w3-input(type='text' name='id' value= editcheck.id)
+						.col-sm-9
+							.form-group
+								input.w3-input(type='password' name='password' placeholder='Enter password for edit, del')
+							button.btn.btn-default.pull-right(type='submit') Submit
+				.col-sm-2.sidenav
+		//br
+		include ../includes/footer.jade

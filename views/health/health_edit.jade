@@ -52,7 +52,7 @@ html
                 .form-grouop
                   textarea#content.form-control(rows='10' name='content')= editIssue.content
                 .form-group
-                  input.w3-input(type='password' name='password' placeholder='Enter password for edit, del')
+                  input.w3-input(type='password' name='password' value= editIssue.password)
                 br
                 button.btn.btn-default(type='submit') Update
         .col-sm-2.sidenav

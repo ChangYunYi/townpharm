@@ -8,16 +8,7 @@ html
 		.container-fluid.text-left
 			.row.content
 				.col-sm-2.sidenav
-					// side-nav 일반 리스트 타입
-					p
-						a(href='/english/english100') 100영어회화
-					p
-						a(href='#') Eng Words
-					p
-						a(href='#') Pre...ESL
-					|-------------------------
-					p
-						a(href='#') Eng Basic
+					include eng_sidenav.jade
 				.col-sm-8
 					// jumbotron
 					.jumbotron
@@ -32,14 +23,15 @@ html
 								th Title
 								th Author
 								th Date
-						//tbody
-						//  each trip in rows
-						//    tr
-						//      td= trip.id
-						//      td
-						//        a(href='/trips/tripsKorea/'+trip.id)= trip.title
-						//      td= trip.author
-						//      td= trip.createdate
+						tbody
+							each main in mains
+								tr
+									td= main.id
+									td
+										a(href='/english/'+main.category+'/'+main.id)= main.title
+									td= main.author
+									td= main.credate
+					a.btn.btn-default.pull-right(href='/english/'+mains[0].category+'/'+mains[0].id+'/add', role='button') ADD
 				.col-sm-2.sidenav
 		//br
 		include ../includes/footer.jade
